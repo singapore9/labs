@@ -11,6 +11,7 @@ def main(n):
         
     
 if __name__=='__main__':
+    print('It\'s the main function')
     try:
         if '-o' in sys.argv:
             n = int(sys.argv[sys.argv.index('-o') + 1])

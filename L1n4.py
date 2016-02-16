@@ -1,5 +1,4 @@
 import sys
-filename = 'L1n4.txt'
 
 def fiboGen(n):
     a, b = 1, 1
@@ -9,17 +8,28 @@ def fiboGen(n):
         a, b = b, a + b
         i += 1
 
-def main(n = int(open(filename, 'r').read())):
+def main(n):
     for x in fiboGen(n):
         print(x)
 
 if __name__ == '__main__':
     try:
-        if '-f' in sys.argv:
-            filename = sys.argv[sys.argv.index('-f') + 1]
+        import argparse
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-f', dest='filename', type=str, help='open F file')
+        args = parser.parse_args()
+        try:
+            if args.filename:
+                with open(args.filename,'r') as file:
+                    num = file.read()
+            else:
+                num = open('L1n4.txt','r').read()
+        except:
+            num = ''
     except:
-        filename = 'L1n4.txt'
-    main()
+        num = open('L1n4.txt','r').read()
+    if num:
+        main(int(num))
+    else:
+        print('invalid data')
         
-with open(filename, 'r') as f:
-	    n = int(f.read())

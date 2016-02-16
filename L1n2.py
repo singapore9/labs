@@ -1,5 +1,4 @@
 import sys
-filename = 'L1n2.txt'
 
 def getArr(line):
     return list(map(int, line.split()))
@@ -90,7 +89,7 @@ def radixFunc(arr):
                     arr.append(_range[i][j])
     return arr  
 
-def main(line = open(filename, 'r').read()):
+def main(line):
     #import random
     #line = ''
     #for i in range(12):
@@ -102,10 +101,21 @@ def main(line = open(filename, 'r').read()):
 
 if __name__ == '__main__':
     try:
-        if '-f' in sys.argv:
-            filename = sys.argv[sys.argv.index('-f') + 1]
+        import argparse
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-f', dest='filename', type=str, help='open F file')
+        args = parser.parse_args()
+        try:
+            if args.filename:
+                with open(args.filename,'r') as file:
+                    line = file.read()
+            else:
+                line = open('L1n2.txt','r').read()
+        except:
+            line = ''
     except:
-        filename = 'L1n2.txt'
-    main()
-with open(filename, 'r') as f:
-    line = f.read()
+        line = open('L1n2.txt','r').read()
+    if line:
+        main(line)
+    else:
+        print('invalid data')

@@ -1,5 +1,4 @@
 import sys
-filename = 'L1n3.txt'
 database = set()
 command = ''    
 
@@ -56,7 +55,7 @@ def load(db):
 COMMANDS = {'add': add, 'remove': remove, 'find': find,\
 		'list': list, 'grep': grep, 'save': save, 'load': load}
  
-def main(commands = open(filename, 'r').readlines()):
+def main(commands):
     global database
     print('Hello')
     while commands:#Continue():
@@ -81,11 +80,24 @@ def main(commands = open(filename, 'r').readlines()):
 
 if __name__ == '__main__':
     try:
-        if '-f' in sys.argv:
-            filename = sys.argv[sys.argv.index('-f') + 1]
+        import argparse
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-f', dest='filename', type=str, help='open F file')
+        args = parser.parse_args()
+        try:
+            if args.filename:
+                with open(args.filename,'r') as file:
+                    commands = file.readlines()
+            else:
+                commands = open('L1n3.txt','r').readlines()
+        except:
+            commands = []
     except:
-        filename = 'L1n3.txt'
-    main()
+        commands = open('L1n3.txt','r').readlines()
+    if commands:
+        main(commands)
+    else:
+        print('invalid data')
 
 
 	    

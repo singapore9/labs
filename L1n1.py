@@ -1,5 +1,4 @@
 import sys
-filename = 'L1n1.txt'
 
 def toStandart(word):
     import string
@@ -18,7 +17,6 @@ def stat(text):
     import string
     words = [word for word in st_text.split() if word not in string.whitespace]
     dict_words = {word:words.count(word) for word in words}
-    print(dict_words)
     return dict_words
 
 def listSent(text):
@@ -69,9 +67,12 @@ def topK(text, K, N):
                 break
     return top
     
-def main(text = open(filename, 'r').read()):
+def main(text):
+    
     print('Text:\n', text)
-    print('Words dictionary:\n', stat(text))
+    #print('Words dictionary:')
+    #w_d = stat(text)
+    #for elem in w_d: print(elem, ':', w_d[elem])
     print('Average num of words in sentence:', averSent(text))
     print('Median num of words in sentence:', mediSent(text))
     try:
@@ -86,10 +87,21 @@ def main(text = open(filename, 'r').read()):
 
 if __name__ == '__main__':
     try:
-        if '-f' in sys.argv:
-            filename = sys.argv[sys.argv.index('-f') + 1]
+        import argparse
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-f', dest='filename', type=str, help='open F file')
+        args = parser.parse_args()
+        try:
+            if args.filename:
+                with open(args.filename,'r') as file:
+                    text = file.read()
+            else:
+                text = open('L1n1.txt','r').read()
+        except:
+            text = ''
     except:
-        filename = 'L1n1.txt'
-    main()
-with open(filename, 'r') as f:
-    text = f.read()
+        text = open('L1n1.txt','r').read()
+    if text:
+        main(text)
+    else:
+        print('invalid data')

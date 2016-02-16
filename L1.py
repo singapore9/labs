@@ -11,10 +11,13 @@ def main(n):
         
     
 if __name__=='__main__':
-    print('It\'s the main function')
     try:
-        if '-o' in sys.argv:
-            n = int(sys.argv[sys.argv.index('-o') + 1])
+        import argparse
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-o', dest='n', type=int, help='open N\'s part of program')
+        args = parser.parse_args()
+        if args.n:
+            n = args.n
         else:
             raise Exception
     except Exception:
